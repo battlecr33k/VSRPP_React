@@ -1,81 +1,64 @@
-import React, {Component} from 'react';
+import React, { useState } from "react";
 
-class Form extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.initialState = {
-            id: 0,
-            firstname: '',
-            lastname: '',
-            email: ''
-        };
+const Form = (props) => {
 
-        this.state = this.initialState;
-    }
+    const [character, setCharacter] = useState({id: 0, firstName: "", lastName: "", email: ""});
 
-    handleChange = event => {
+    const handleChange = (event) => {
         const { name, value } = event.target;
-
-        this.setState({
-            [name] : value
-        });
+        setCharacter({...character, [name]: value})
     }
 
-    onFormSubmit = (event) => {
+    const onFormSubmit = (event) => {
         event.preventDefault();
         
-        this.initialState.id++;
-        this.props.handleSubmit(this.state);
-        this.setState(this.initialState);
+        props.handleSubmit(character);
+        setCharacter({id: character.id + 1, firstName: "", lastName: "", email: ""});
     }
 
-    render() {
-        const { id, firstname, lastname, email } = this.state; 
 
-        return (
-            <form onSubmit={this.onFormSubmit}>
-                <div className='forma'>
-                    <button type="submit">
-                        Add User
-                    </button>
+    return (
+        <form onSubmit={onFormSubmit}>
+            <div className='forma'>
+                <button type="submit">
+                    Add User
+                </button>
 
-                    <div className='labelinput'>
-                        <label for="firstname">FirstName</label>
-                        <input 
-                            type="text" 
-                            name="firstname" 
-                            id="firstname"
-                            required
-                            value={firstname} 
-                            onChange={this.handleChange} />
-                    </div>
-
-                    <div className='labelinput'>
-                        <label for="lastname">LastName</label>
-                        <input 
-                            type="text" 
-                            name="lastname" 
-                            id="lastname"
-                            required
-                            value={lastname} 
-                            onChange={this.handleChange} />
-                    </div>
-
-                    <div className='labelinput'>    
-                        <label for="email">Email</label>
-                        <input 
-                            type="email" 
-                            name="email" 
-                            id="email"
-                            required
-                            value={email} 
-                            onChange={this.handleChange} />
-                    </div>
+                <div className='labelinput'>
+                    <label for="firstname">FirstName</label>
+                    <input 
+                        type="text" 
+                        name="firstname" 
+                        id="firstname"
+                        required
+                        value={character.firstname} 
+                        onChange={handleChange} />
                 </div>
-            </form>
-        );
-    }
+
+                <div className='labelinput'>
+                    <label for="lastname">LastName</label>
+                    <input 
+                        type="text" 
+                        name="lastname" 
+                        id="lastname"
+                        required
+                        value={character.lastname} 
+                        onChange={handleChange} />
+                </div>
+
+                <div className='labelinput'>    
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email"
+                        required
+                        value={character.email} 
+                        onChange={handleChange} />
+                </div>
+            </div>
+        </form>
+    );
 }
 
 export default Form;

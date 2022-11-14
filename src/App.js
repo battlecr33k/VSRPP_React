@@ -1,42 +1,24 @@
-import React, { Component } from 'react';
-import Table from './components/Table';
-import Form from './components/Form';
+import React, { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import AppRouter from './components/AppRouter';
+import { AuthContext } from './context';
 
-class App extends Component {
-    state = {
-        characters: []
-    };
+function App() {
+    const [isAuth, setIsAuth] = useState(false);
+    const [curUser, setCurUser] = useState({login: "", password: ""})
 
-    removeCharacter = index => {
-        const { characters } = this.state;
-    
-        this.setState({
-            characters: characters.filter((character, i) => { 
-                return i !== index;
-            })
-        });
-    }
-
-    handleSubmit = character => {
-        this.setState({characters: [...this.state.characters, character]});
-    }
-
-    render() {
-        const { characters } = this.state;
-        
-        return (
-            <div className="container">
-                
-                <Form handleSubmit={this.handleSubmit} />
-                <h3>Users</h3>
-                <Table
-                    characterData={characters}
-                    removeCharacter={this.removeCharacter}
-                />
-                
-            </div>
+    return (
+        <AuthContext.Provider value={{
+            isAuth,
+            setIsAuth,
+            curUser,
+            setCurUser
+        }}>
+            <BrowserRouter>
+                <AppRouter/>
+            </BrowserRouter>
+        </AuthContext.Provider>
         );
-    }
 }
 
 export default App;

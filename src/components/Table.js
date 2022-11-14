@@ -15,28 +15,31 @@ const TableHeader = () => {
 }
 
 const TableBody = props => { 
-    const rows = props.characterData.map((row, index) => {
+    const characters = props.characterData.map((character) => {
         return (
-            <tr key={index}>
-                <td>{row.id + 1}</td>
-                <td>{row.firstname}</td>
-                <td>{row.lastname}</td>
-                <td>{row.email}</td>
-                <td><button onClick={() => props.removeCharacter(index)}>Delete</button></td>
+            <tr key={character.id}>
+                <td>{character.id}</td>
+                <td>{character.firstname}</td>
+                <td>{character.lastname}</td>
+                <td>{character.email}</td>
+                <td><button onClick={() => props.removeCharacter(character.id)}>Delete</button></td>
             </tr>
         );
     });
 
-    return <tbody>{rows}</tbody>;
+    return <tbody>{characters}</tbody>;
 }
 
 const Table = (props) => {
     const { characterData, removeCharacter } = props;
         return (
-            <table>
-                <TableHeader />
-                <TableBody characterData={characterData} removeCharacter={removeCharacter} />
-            </table>
+            <div>
+                <h3>Users</h3>
+                <table>
+                    <TableHeader />
+                    <TableBody characterData={characterData} removeCharacter={removeCharacter} />
+                </table>
+            </div>
         );
 }
 
