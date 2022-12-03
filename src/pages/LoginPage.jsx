@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context";
 import { users } from "../data/users";
@@ -16,10 +17,11 @@ const LoginPage = () => {
 
         if (users.find(user => user.login === authorizationData.login && user.password === authorizationData.password)) {
             setIsAuth(true);
-            dispatch(setCurrentUserAction(authorizationData))
+            dispatch(setCurrentUserAction(authorizationData));
+            toast.success('Successfully logged in!');
         }
         else {
-            alert("Invalid login or password!");
+            toast.error("Invalid login or password!");
         }
         
     }
